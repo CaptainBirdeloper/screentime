@@ -1,126 +1,136 @@
 /* ==========================================================================
-   Navigation & Unified Hero Metrics
+   Studio Sidebar, Range Controls & Tactile Hero Modules
    ========================================================================== */
 
-/* Top Navigation Bar */
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.range-switch {
-  display: inline-flex;
-  gap: 2px;
-  background: var(--surface);
-  border: 1px solid var(--surface-border);
-  padding: 3px;
-  border-radius: var(--radius-full);
-}
-
-.range-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-300);
-  font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 600;
-  padding: 6px 18px;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all 0.18s ease;
-  user-select: none;
-}
-
-.range-btn:hover {
-  color: var(--text-100);
-}
-
-.range-btn.active {
-  background: var(--text-100);
-  color: #000000;
-  font-weight: 700;
-}
-
-/* Unified Hero Banner */
-.hero-banner {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 16px;
-}
-
-@media (max-width: 720px) {
-  .hero-banner {
-    grid-template-columns: 1fr;
-  }
-}
-
-.hero-metric-box {
-  background: var(--surface);
-  border: 1px solid var(--surface-border);
-  border-radius: var(--radius-lg);
-  padding: 24px 28px;
+/* --------------------------------------------------------------------------
+   Left Studio Rail / Control Sidebar
+   -------------------------------------------------------------------------- */
+.studio-sidebar {
+  background: var(--surface-sidebar);
+  border-right: 1px solid var(--border-specular);
+  padding: 28px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
-  overflow: hidden;
+  gap: 24px;
+  height: 100vh;
+  overflow-y: auto;
+  backdrop-filter: blur(20px);
 }
 
-.hero-metric-box.primary::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
-  pointer-events: none;
+.sidebar-top-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.hero-metric-box.secondary::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
-  pointer-events: none;
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.hero-timer-display {
-  font-size: 3.2rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  color: var(--text-100);
-  font-feature-settings: "tnum" 1;
-  margin-top: 6px;
-}
-
-.hero-app-name {
-  font-size: 1.7rem;
+.brand-title {
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--text-100);
+  color: var(--text-pure);
+}
+
+.brand-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--blue-primary);
+  background: var(--blue-surface);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* Apple Floating Segmented Pill Stack */
+.segmented-range-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-specular);
+  padding: 4px;
+  border-radius: var(--radius-md);
+}
+
+.range-pill-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--anim-duration-fast) var(--ease-out-apple);
+  user-select: none;
+}
+
+.range-pill-btn:hover {
+  color: var(--text-pure);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.range-pill-btn:active {
+  transform: scale(0.97);
+}
+
+.range-pill-btn.active {
+  background: var(--text-pure);
+  color: #000000;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* Sidebar Hero Metrics Box */
+.sidebar-metric-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-timer-value {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-pure);
+  font-feature-settings: "tnum" 1;
+  line-height: 1.1;
+}
+
+.sidebar-top-app-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-specular);
+}
+
+.sidebar-top-app-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--green-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 6px;
+  max-width: 140px;
 }
 
-.hero-sub-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  margin-top: 10px;
-  font-size: 11.5px;
+.sidebar-top-app-pct {
+  font-size: 11px;
+  font-family: var(--font-mono);
   font-weight: 700;
-  color: var(--green);
-  background: var(--green-surface);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
+  color: var(--text-secondary);
 }

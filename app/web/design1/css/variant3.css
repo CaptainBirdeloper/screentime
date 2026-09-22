@@ -1,0 +1,222 @@
+/* ==========================================================================
+   Variant 3: "Waveform Studio"
+   Axis: Full-Bleed 100vw Desktop Console
+   ========================================================================== */
+
+.v3-studio-shell {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background: var(--bg-canvas);
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .v3-studio-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+/* Left Studio Rail */
+.v3-sidebar {
+  background: #08080d;
+  border-right: 1px solid var(--border-specular);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.v3-brand-title {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--text-pure);
+}
+
+.v3-range-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-specular);
+}
+
+.v3-range-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease-out;
+}
+
+.v3-range-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.v3-range-btn.active {
+  background: #ffffff;
+  color: #000000;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+}
+
+.v3-telemetry-box {
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v3-telemetry-digits {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text-pure);
+  line-height: 1.1;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Right Stage */
+.v3-main-stage {
+  padding: 32px 40px;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.v3-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.v3-horizon-bar {
+  width: 100%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-pill);
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--border-specular);
+}
+
+.v3-horizon-seg {
+  height: 100%;
+  transition: width 0.4s var(--ease-out-apple);
+}
+
+/* Full-width dense app horizontal bars */
+.v3-app-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.v3-app-row {
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.15s ease-out;
+}
+
+.v3-app-row:hover {
+  background: var(--surface-card-hover);
+  border-color: var(--border-specular-hover);
+}
+
+.v3-app-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v3-app-name-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.v3-app-color-bar {
+  width: 6px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.v3-app-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-pure);
+}
+
+.v3-app-exe {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.v3-app-stat-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.v3-app-time {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-pure);
+}
+
+.v3-app-pct {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* CHUNKY 12px HORIZONTAL BAR */
+.v3-app-row-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.v3-app-row-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.4s var(--ease-out-apple);
+}

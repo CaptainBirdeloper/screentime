@@ -1,45 +1,67 @@
 /* ==========================================================================
-   AMOLED Design Tokens - Pure Void & Precision Accents
-   Palette: Void Black (#000000), Pure White (#ffffff),
-   Electric Blue (#38bdf8), Emerald (#10b981), Crimson (#f43f5e)
+   Design Tokens - Full-Width AMOLED Desktop Studio & Neo-Expressive Prototypes
+   Palette: Void Black (#000000), Specular White (#ffffff),
+   Vibrant Yellow (#fbbf24), Electric Blue (#38bdf8 / #2563eb),
+   Emerald (#10b981), Vivid Coral (#f43f5e), Royal Purple (#a855f7)
    ========================================================================== */
 
 :root {
-  --bg: #000000;
-  --surface: #090a0f;
-  --surface-hover: #11131a;
-  --surface-raised: #151821;
-  --surface-border: rgba(255, 255, 255, 0.07);
-  --surface-border-hover: rgba(255, 255, 255, 0.16);
+  /* True AMOLED Void & Layered Depths */
+  --bg-canvas: #000000;
+  --surface-ground: #08080c;
+  --surface-card: #111118;
+  --surface-card-hover: #181824;
+  --surface-raised: rgba(255, 255, 255, 0.06);
+  --surface-sunken: #050508;
+  
+  /* Specular Light Catching Borders */
+  --border-specular: rgba(255, 255, 255, 0.10);
+  --border-specular-hover: rgba(255, 255, 255, 0.22);
+  --border-top-highlight: rgba(255, 255, 255, 0.16);
 
-  --text-100: #ffffff;
-  --text-200: #cbd5e1;
-  --text-300: #64748b;
-  --text-400: #334155;
+  /* Typography Colors */
+  --text-pure: #ffffff;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-dark: #000000;
 
-  /* Intentional Color Accents */
-  --blue: #38bdf8;
-  --blue-glow: rgba(56, 189, 248, 0.25);
-  --blue-surface: rgba(56, 189, 248, 0.1);
+  /* Expressive Hero Palette (Image 1 Inspo) */
+  --yellow-hero: #facc15;
+  --yellow-hero-hover: #eab308;
+  --yellow-surface: #1e1a06;
+  
+  --blue-hero: #2563eb;
+  --blue-hero-vivid: #3b82f6;
+  --blue-primary: #38bdf8;
+  --blue-glow: rgba(56, 189, 248, 0.35);
 
-  --green: #10b981;
-  --green-glow: rgba(16, 185, 129, 0.25);
-  --green-surface: rgba(16, 185, 129, 0.1);
+  --green-primary: #10b981;
+  --green-glow: rgba(16, 185, 129, 0.35);
 
-  --red: #f43f5e;
-  --red-glow: rgba(244, 63, 94, 0.25);
-  --red-surface: rgba(244, 63, 94, 0.1);
+  --coral-primary: #f43f5e;
+  --coral-glow: rgba(244, 63, 94, 0.35);
 
-  --purple: #a855f7;
-  --amber: #f59e0b;
+  --purple-primary: #a855f7;
+  --purple-glow: rgba(168, 85, 247, 0.35);
 
+  --orange-primary: #f97316;
+
+  /* Typography Scale */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
   --font-mono: "SF Mono", "JetBrains Mono", "Consolas", monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-full: 9999px;
+  /* Radiuses (Tactile Chunky Geometry) */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
 
-  --shadow-ambient: 0 20px 40px -15px rgba(0, 0, 0, 0.9);
+  /* Emil Kowalski Motion Tokens */
+  --ease-out-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --anim-duration-fast: 150ms;
+  --anim-duration-base: 240ms;
 }

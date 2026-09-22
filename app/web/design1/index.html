@@ -3,87 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ScreenTime • Precision AMOLED</title>
+  <title>ScreenTime • Prototype Exploration</title>
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/charts.css">
-  <link rel="stylesheet" href="css/timeline.css">
+  <link rel="stylesheet" href="css/variant1.css">
+  <link rel="stylesheet" href="css/variant2.css">
+  <link rel="stylesheet" href="css/variant3.css">
 </head>
 <body>
-  <div class="app-wrapper">
-    <!-- Top Nav Controls -->
-    <header class="top-nav">
-      <div class="range-switch">
-        <button class="range-btn active" data-range="today">Today</button>
-        <button class="range-btn" data-range="yesterday">Yesterday</button>
-        <button class="range-btn" data-range="7days">Last 7 Days</button>
-      </div>
-      <span class="count-chip" id="appCountTag">0 Apps</span>
-    </header>
+  <!-- Active Prototype Canvas Stage -->
+  <main id="stage" role="main"></main>
 
-    <!-- Unified Hero Metrics -->
-    <section class="hero-banner">
-      <div class="hero-metric-box primary">
-        <span class="section-label">Total Screen Time</span>
-        <div class="hero-timer-display" id="totalTimeVal">0h 0m 0s</div>
-      </div>
-
-      <div class="hero-metric-box secondary">
-        <span class="section-label">Top Application</span>
-        <div class="hero-app-name" id="topAppVal">—</div>
-        <div class="hero-sub-pill" id="topAppSub">0% of total</div>
-      </div>
-    </section>
-
-    <!-- Split Distribution & App Leaderboard -->
-    <main class="split-layout">
-      <!-- Usage Distribution Gauge -->
-      <div class="panel-card">
-        <div class="panel-header-row">
-          <span class="section-label">Distribution</span>
-        </div>
-        <div class="gauge-column">
-          <div class="gauge-svg-box">
-            <svg id="donutSvg" viewBox="0 0 200 200" class="gauge-svg">
-              <circle cx="100" cy="100" r="70" class="gauge-track" />
-              <g id="donutSegments"></g>
-            </svg>
-          </div>
-          <div class="legend-stream" id="chartLegend"></div>
-        </div>
-      </div>
-
-      <!-- Ranked Leaderboard Stream -->
-      <div class="panel-card">
-        <div class="panel-header-row">
-          <span class="section-label">Applications</span>
-        </div>
-        <div class="apps-stream" id="appsList">
-          <div class="empty-state">No screen time logged for this period.</div>
-        </div>
-      </div>
-    </main>
-
-    <!-- 24-Hour Precision Timeline -->
-    <section class="panel-card timeline-panel" id="timelineSection">
-      <div class="panel-header-row">
-        <span class="section-label">24-Hour Activity Waveform</span>
-      </div>
-      <div class="timeline-chart-wrap">
-        <div class="precision-bars-track" id="timelineContainer"></div>
-        <div class="time-ticks-row">
-          <span class="time-tick-item">00:00</span>
-          <span class="time-tick-item">04:00</span>
-          <span class="time-tick-item">08:00</span>
-          <span class="time-tick-item">12:00</span>
-          <span class="time-tick-item">16:00</span>
-          <span class="time-tick-item">20:00</span>
-          <span class="time-tick-item">23:00</span>
-        </div>
-      </div>
-    </section>
-  </div>
+  <!-- Prototype Picker Harness (verbatim from PICKER.md) -->
+  <nav class="proto-picker" aria-label="Prototype variants">
+    <span class="proto-picker-highlight" aria-hidden="true"></span>
+    <button class="proto-picker-item" data-active aria-current="true">Chunky Neo</button>
+    <button class="proto-picker-item">Solid Bento</button>
+    <button class="proto-picker-item">Waveform Studio</button>
+    <span class="proto-picker-divider" aria-hidden="true"></span>
+    <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
+  </nav>
 
   <script src="app.js"></script>
 </body>

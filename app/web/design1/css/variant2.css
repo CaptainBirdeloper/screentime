@@ -1,0 +1,293 @@
+/* ==========================================================================
+   Variant 2: "Solid Bento"
+   Axis: Proportional Slab Infill & Integrated Progress Gauges
+   ========================================================================== */
+
+.v2-shell {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .v2-shell {
+    padding: 16px;
+    gap: 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Bento Header Bar
+   -------------------------------------------------------------------------- */
+.v2-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-lg);
+  padding: 16px 24px;
+}
+
+.v2-brand-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.v2-brand-name {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--text-pure);
+}
+
+.v2-time-range-group {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-specular);
+}
+
+.v2-range-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+}
+
+.v2-range-btn.active {
+  background: var(--blue-primary);
+  color: #000000;
+  box-shadow: 0 0 14px var(--blue-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Bento Hero Row: Giant Active Slab + Peak Slab
+   -------------------------------------------------------------------------- */
+.v2-bento-hero-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .v2-bento-hero-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.v2-hero-slab {
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.v2-hero-watermark {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  user-select: none;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.v2-slab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v2-slab-title {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.v2-hero-digits {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text-pure);
+  font-feature-settings: "tnum" 1;
+}
+
+.v2-slab-badge {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--green-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Integrated Horizon Segment Bar
+   -------------------------------------------------------------------------- */
+.v2-horizon-slab {
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.v2-horizon-track {
+  width: 100%;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-ground);
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--border-specular);
+}
+
+.v2-horizon-chunk {
+  height: 100%;
+  transition: width 0.35s var(--ease-out-apple);
+}
+
+.v2-legend-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.v2-legend-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--blue-primary);
+}
+
+.v2-legend-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-pure);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+
+.v2-legend-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   Bento App Slabs Grid (Thick Integrated Progress Slabs)
+   -------------------------------------------------------------------------- */
+.v2-app-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+}
+
+.v2-bento-app-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-specular);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s var(--ease-out-apple);
+}
+
+.v2-bento-app-card:hover {
+  background: var(--surface-card-hover);
+  border-color: var(--border-specular-hover);
+  transform: translateY(-2px);
+}
+
+.v2-card-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v2-card-app-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v2-card-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-pure);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v2-card-pct-giant {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.v2-card-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v2-card-exe {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.v2-card-dur {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* INTEGRATED 18px CHUNKY PROGRESS GAUGE */
+.v2-gauge-slab-track {
+  width: 100%;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+}
+
+.v2-gauge-slab-fill {
+  height: 100%;
+  transition: width 0.4s var(--ease-out-apple);
+}
