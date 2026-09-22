@@ -1,67 +1,45 @@
 /* ==========================================================================
-   Material 3 Expressive - AMOLED Design Tokens & Variables
-   Palette Intention: Black (True Void), Blue (Primary/Active), Green (Vitality/Top),
-   Red (High Consumption/Alert), White (Pure Specular Contrast)
+   AMOLED M3 Expressive Bento Tokens
+   Primary: Black (#000000), Blue (#2563eb / #38bdf8), Green (#16a34a / #4ade80),
+   Red (#dc2626 / #f87171), White (#ffffff)
    ========================================================================== */
 
 :root {
-  /* Surface Layers (AMOLED Pitch Black Foundation) */
-  --md-sys-color-background: #000000;
-  --md-sys-color-surface: #050507;
-  --md-sys-color-surface-dim: #020203;
-  --md-sys-color-surface-container-lowest: #08080b;
-  --md-sys-color-surface-container-low: #0e0e13;
-  --md-sys-color-surface-container: #14141a;
-  --md-sys-color-surface-container-high: #1c1c24;
-  --md-sys-color-surface-container-highest: #262632;
+  --bg-amoled: #000000;
+  --surface-bento: #0a0a0e;
+  --surface-bento-sub: #121218;
+  --surface-tile: #181820;
+  --surface-tile-hover: #22222c;
   
-  /* Specular Boundaries & Outlines */
-  --md-sys-color-outline: rgba(255, 255, 255, 0.08);
-  --md-sys-color-outline-variant: rgba(255, 255, 255, 0.04);
-  --md-sys-color-outline-focus: rgba(59, 130, 246, 0.5);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-active: rgba(56, 189, 248, 0.4);
 
-  /* Primary Blue Palette (Focus, Interaction, Total Duration) */
-  --color-blue-400: #60a5fa;
-  --color-blue-500: #3b82f6;
-  --color-blue-600: #2563eb;
-  --color-blue-container: rgba(59, 130, 246, 0.12);
-  --color-blue-on-container: #93c5fd;
+  /* Primary Blue */
+  --blue-primary: #38bdf8;
+  --blue-deep: #1d4ed8;
+  --blue-glow: rgba(56, 189, 248, 0.2);
 
-  /* Vitality Green Palette (Top Application, Active Positive Status) */
-  --color-green-400: #4ade80;
-  --color-green-500: #22c55e;
-  --color-green-600: #16a34a;
-  --color-green-container: rgba(34, 197, 94, 0.12);
-  --color-green-on-container: #86efac;
+  /* Vitality Green */
+  --green-primary: #4ade80;
+  --green-deep: #15803d;
+  --green-glow: rgba(74, 222, 128, 0.2);
 
-  /* Alert / High-Consumption Red Palette (Intense Screen Time Alerts) */
-  --color-red-400: #f87171;
-  --color-red-500: #ef4444;
-  --color-red-600: #dc2626;
-  --color-red-container: rgba(239, 68, 68, 0.12);
-  --color-red-on-container: #fca5a5;
+  /* Alert Red */
+  --red-primary: #f87171;
+  --red-deep: #b91c1c;
+  --red-glow: rgba(248, 113, 113, 0.2);
 
-  /* Specular High-Contrast Whites & Neutrals */
-  --color-white: #ffffff;
-  --md-sys-color-on-surface: #f8fafc;
-  --md-sys-color-on-surface-variant: #94a3b8;
-  --md-sys-color-muted: #64748b;
+  /* Specular White & Greys */
+  --text-pure: #ffffff;
+  --text-dim: #94a3b8;
+  --text-muted: #52525b;
 
-  /* Typography Scale (Material 3 Expressive) */
-  --font-family-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Roboto Flex", "Segoe UI", sans-serif;
-  --font-family-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Roboto", "Segoe UI", sans-serif;
-  
-  /* Corner Shapes (M3 Expressive Organic Curvature) */
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 22px;
-  --radius-xl: 28px;
-  --radius-full: 9999px;
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --font-mono: "SF Mono", "Consolas", monospace;
 
-  /* Ambient Glows & Elevations */
-  --elevation-surface: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
-  --elevation-card: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--md-sys-color-outline);
-  --glow-blue: 0 0 35px -5px rgba(59, 130, 246, 0.25);
-  --glow-green: 0 0 35px -5px rgba(34, 197, 94, 0.25);
+  --radius-bento: 24px;
+  --radius-tile: 14px;
+  --radius-pill: 9999px;
+
+  --shadow-bento: 0 16px 40px -10px rgba(0, 0, 0, 0.95);
 }

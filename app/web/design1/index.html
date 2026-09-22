@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ScreenTime • AMOLED</title>
-  <!-- Modular Feature Stylesheets -->
+  <title>ScreenTime • AMOLED Bento</title>
+  <!-- Modular Bento Feature Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
@@ -12,73 +12,62 @@
   <link rel="stylesheet" href="css/timeline.css">
 </head>
 <body>
-  <div class="app-container">
-    <!-- Floating Segmented Pill Tabs -->
-    <div class="tabs-wrapper">
-      <div class="segmented-pill-tabs">
-        <button class="tab-pill active" data-range="today">Today</button>
-        <button class="tab-pill" data-range="yesterday">Yesterday</button>
-        <button class="tab-pill" data-range="7days">Last 7 Days</button>
+  <div class="bento-app">
+    <!-- Top Floating Segmented Dock -->
+    <div class="bento-nav-dock">
+      <div class="pill-group">
+        <button class="pill-btn active" data-range="today">Today</button>
+        <button class="pill-btn" data-range="yesterday">Yesterday</button>
+        <button class="pill-btn" data-range="7days">Last 7 Days</button>
       </div>
+      <span class="dock-badge" id="appCountTag">0 Apps Active</span>
     </div>
 
-    <!-- Asymmetric Hero Metric Cards -->
-    <section class="metrics-banner">
-      <div class="metric-hero-card primary-metric">
-        <div class="metric-label-row">
-          <span class="metric-micro-dot"></span>
-          <span class="metric-label-text">Total Screen Time</span>
+    <!-- Main Bento Grid -->
+    <main class="bento-main-grid">
+      <!-- 1. Hero Focus Bento (2 Columns) -->
+      <div class="bento-card hero-focus-bento">
+        <div class="hero-main-content">
+          <div class="bento-title-label">Active Screen Time</div>
+          <div class="hero-big-timer" id="totalTimeVal">0h 0m 0s</div>
         </div>
-        <div class="metric-display-num" id="totalTimeVal">0h 0m 0s</div>
-      </div>
 
-      <div class="metric-hero-card secondary-metric">
-        <div class="metric-label-row">
-          <span class="metric-micro-dot"></span>
-          <span class="metric-label-text">Top Application</span>
-        </div>
-        <div class="metric-display-num" id="topAppVal">—</div>
-        <div class="metric-chip-sub" id="topAppSub">0% of total</div>
-      </div>
-    </section>
-
-    <!-- Main Content: Donut Gauge (Left) & Applications Flow (Right) -->
-    <main class="dashboard-grid">
-      <!-- Usage Distribution Panel -->
-      <div class="m3-surface-card">
-        <div class="card-header">
-          <h2 class="card-title">Distribution</h2>
-        </div>
-        <div class="donut-gauge-wrapper">
-          <div class="svg-donut-container">
-            <svg id="donutSvg" viewBox="0 0 200 200" class="donut-svg">
-              <circle cx="100" cy="100" r="70" class="donut-track-bg" />
-              <g id="donutSegments"></g>
-            </svg>
+        <div class="hero-top-app-strip">
+          <div class="top-app-left">
+            <span class="top-app-dot"></span>
+            <span class="top-app-name-text" id="topAppVal">—</span>
           </div>
-          <div class="legend-list" id="chartLegend"></div>
+          <span class="top-app-pill-stat" id="topAppSub">0%</span>
         </div>
       </div>
 
-      <!-- Application Breakdown List -->
-      <div class="m3-surface-card">
-        <div class="card-header">
-          <h2 class="card-title">Applications</h2>
-          <span class="card-pill-tag" id="appCountTag">0 Apps</span>
+      <!-- 2. Multi-Segment Distribution Bento (1 Column) -->
+      <div class="bento-card distribution-bento">
+        <div class="bento-header">
+          <span class="bento-title-label">Distribution</span>
         </div>
-        <div class="apps-flow-scroll" id="appsList">
-          <div class="empty-notice">No screen time recorded for this period.</div>
+        <div class="horizon-meter-bar" id="horizonMeter"></div>
+        <div class="meter-legend-list" id="chartLegend"></div>
+      </div>
+
+      <!-- 3. Applications Grid Bento (3 Columns) -->
+      <div class="bento-card apps-grid-bento">
+        <div class="bento-header">
+          <span class="bento-title-label">Application Grid</span>
         </div>
+        <div class="apps-tiles-container" id="appsList">
+          <div class="empty-tile-notice">No screen time logged for this time window.</div>
+        </div>
+      </div>
+
+      <!-- 4. 24-Hour Spectrum Heatmap Bento (3 Columns) -->
+      <div class="bento-card timeline-bento" id="timelineSection">
+        <div class="bento-header">
+          <span class="bento-title-label">24-Hour Activity Spectrum</span>
+        </div>
+        <div class="timeline-heat-matrix" id="timelineContainer"></div>
       </div>
     </main>
-
-    <!-- 24-Hour Activity Timeline Panel -->
-    <section class="m3-surface-card timeline-card" id="timelineSection">
-      <div class="card-header">
-        <h2 class="card-title">24-Hour Activity Timeline</h2>
-      </div>
-      <div class="timeline-pillars-grid" id="timelineContainer"></div>
-    </section>
   </div>
 
   <script src="app.js"></script>

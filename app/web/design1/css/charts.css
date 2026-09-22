@@ -1,256 +1,132 @@
 /* ==========================================================================
-   Material 3 Expressive - Charts, Donut Gauge & Application Breakdown
+   Bento Application Grid: Tactile Modular Cards (3-Column Span)
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   Main 2-Column Dashboard Grid
-   -------------------------------------------------------------------------- */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 16px;
+.apps-grid-bento {
+  grid-column: span 3;
 }
 
-@media (max-width: 860px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 960px) {
+  .apps-grid-bento {
+    grid-column: span 2;
   }
 }
 
-.m3-surface-card {
-  background: var(--md-sys-color-surface-container-low);
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: var(--radius-xl);
-  padding: 22px;
-  box-shadow: var(--elevation-card);
-  display: flex;
-  flex-direction: column;
+@media (max-width: 680px) {
+  .apps-grid-bento {
+    grid-column: span 1;
+  }
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant);
-}
-
-.card-title {
-  font-family: var(--font-family-display);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--md-sys-color-on-surface);
-}
-
-.card-pill-tag {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--md-sys-color-muted);
-  background: var(--md-sys-color-surface-container-high);
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-}
-
-/* --------------------------------------------------------------------------
-   SVG Donut Gauge & Legend (Left Panel)
-   -------------------------------------------------------------------------- */
-.donut-gauge-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.svg-donut-container {
-  width: 170px;
-  height: 170px;
-  position: relative;
-}
-
-.donut-svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-
-.donut-track-bg {
-  fill: none;
-  stroke: var(--md-sys-color-surface-container-highest);
-  stroke-width: 22;
-}
-
-.donut-arc-segment {
-  fill: none;
-  stroke-width: 22;
-  stroke-linecap: round;
-  transition: stroke-dasharray 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Compact Vertical Legend */
-.legend-list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-height: 260px;
-  overflow-y: auto;
-  padding-right: 2px;
-}
-
-.legend-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  padding: 4px 6px;
-  border-radius: var(--radius-xs);
-  transition: background 0.15s;
-}
-
-.legend-row:hover {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.legend-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.legend-squircle {
-  width: 9px;
-  height: 9px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-
-.legend-app-name {
-  color: var(--md-sys-color-on-surface-variant);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: 500;
-}
-
-.legend-pct-val {
-  font-family: var(--font-family-display);
-  font-weight: 700;
-  color: var(--color-white);
-  font-feature-settings: "tnum" 1;
-}
-
-/* --------------------------------------------------------------------------
-   Ranked Application Breakdown List (Right Panel)
-   -------------------------------------------------------------------------- */
-.apps-flow-scroll {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.apps-tiles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
   max-height: 420px;
   overflow-y: auto;
   padding-right: 4px;
 }
 
-.app-card-row {
+.app-bento-tile {
+  background: var(--surface-bento-sub);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-tile);
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  background: var(--md-sys-color-surface-container);
-  border: 1px solid var(--md-sys-color-outline-variant);
-  padding: 10px 14px;
-  border-radius: var(--radius-md);
+  gap: 10px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
-.app-card-row:hover {
-  background: var(--md-sys-color-surface-container-high);
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateX(2px);
+.app-bento-tile:hover {
+  background: var(--surface-tile-hover);
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
 }
 
-.app-card-meta-line {
+.tile-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.tile-meta-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.tile-color-pill {
+  width: 4px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.tile-titles {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tile-app-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-pure);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile-app-exe {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.tile-pct-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-tile);
+  color: var(--text-pure);
+}
+
+.tile-bottom-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.app-meta-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.app-vertical-pill {
-  width: 4px;
-  height: 24px;
-  border-radius: var(--radius-full);
-  flex-shrink: 0;
-}
-
-.app-title-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.app-primary-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-white);
-}
-
-.app-exe-subtext {
-  font-size: 10.5px;
-  color: var(--md-sys-color-muted);
-}
-
-.app-metrics-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.app-duration-val {
-  font-family: var(--font-family-display);
+.tile-duration-text {
   font-size: 13px;
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--text-pure);
   font-feature-settings: "tnum" 1;
 }
 
-.app-pct-pill-tag {
-  font-size: 10.5px;
-  font-weight: 700;
-  background: var(--md-sys-color-surface-container-highest);
-  color: var(--color-blue-400);
-  padding: 2px 7px;
-  border-radius: var(--radius-full);
-  min-width: 42px;
-  text-align: center;
-}
-
-/* Expressive Progress Track */
-.m3-progress-track {
+.tile-progress-track {
   width: 100%;
   height: 4px;
-  background: var(--md-sys-color-surface-container-highest);
-  border-radius: var(--radius-full);
+  background: var(--surface-tile);
+  border-radius: var(--radius-pill);
   overflow: hidden;
+  margin-top: 2px;
 }
 
-.m3-progress-fill {
+.tile-progress-bar {
   height: 100%;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.empty-notice {
+.empty-tile-notice {
+  grid-column: 1 / -1;
   text-align: center;
-  color: var(--md-sys-color-muted);
-  padding: 40px 20px;
+  color: var(--text-muted);
+  padding: 40px;
   font-size: 13px;
 }
