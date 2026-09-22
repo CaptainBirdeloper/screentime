@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScreenTime</title>
+</head>
+<body>
+  <h1>ScreenTime</h1>
+
+  <div id="tabs">
+    <button class="tab-btn" data-range="today">Today</button>
+    <button class="tab-btn" data-range="yesterday">Yesterday</button>
+    <button class="tab-btn" data-range="7days">Last 7 Days</button>
+  </div>
+
+  <button id="refreshBtn">Refresh</button>
+  <span id="lastSyncText"></span>
+
+  <div id="metrics">
+    <div>Total Time: <span id="totalTimeVal">0s</span></div>
+    <div>Top App: <span id="topAppVal">—</span> (<span id="topAppSub">0%</span>)</div>
+  </div>
+
+  <h2>Usage Distribution</h2>
+  <svg id="donutSvg" viewBox="0 0 200 200" width="200" height="200">
+    <circle cx="100" cy="100" r="70" fill="none" stroke="#eee" stroke-width="20" />
+    <g id="donutSegments"></g>
+  </svg>
+  <div id="chartLegend"></div>
+
+  <h2>Applications (<span id="appCountTag">0</span>)</h2>
+  <div id="appsList"></div>
+
+  <div id="timelineSection">
+    <h2>24-Hour Timeline</h2>
+    <div id="timelineContainer"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
