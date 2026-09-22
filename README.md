@@ -38,7 +38,6 @@ screentime test\
 │   └── screentime.db       # Local SQLite database (created on first run)
 ├── run.py                  # Main entry point with single-instance lock
 ├── start_silent.bat        # Silent launcher (no console window)
-├── setup_startup.bat       # Helper to add/remove from Windows Startup
 └── requirements.txt        # Minimal dependencies (pystray, Pillow)
 ```
 
@@ -75,6 +74,4 @@ pip install -r requirements.txt
 ## Windows Startup Configuration
 
 To have ScreenTime start automatically when you turn on your PC:
-1. Double-click `setup_startup.bat` in this folder.
-2. Press `y` when prompted to add the launcher to your Windows Startup folder.
-3. To remove it later, run `setup_startup.bat` again and choose to remove it, or toggle **"Start with Windows"** directly from the system tray menu.
+- Right-click the system tray icon and check **"Start with Windows"** (uncheck anytime to disable).
