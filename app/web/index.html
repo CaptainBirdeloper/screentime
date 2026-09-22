@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScreenTime Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>ScreenTime</h1>
+          <span class="subtitle">Offline Background Monitor</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="status-indicator" id="statusIndicator">
+          <span class="status-dot"></span>
+          <span class="status-label" id="statusLabel">Tracking</span>
+        </div>
+
+        <button class="btn btn-secondary" id="togglePauseBtn">
+          <span id="pauseBtnIcon">⏸</span>
+          <span id="pauseBtnText">Pause</span>
+        </button>
+
+        <button class="btn btn-icon" id="refreshBtn" title="Refresh metrics">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6"></path>
+            <path d="M1 20v-6h6"></path>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Range Selector Tabs -->
+    <div class="tabs-bar">
+      <div class="tabs">
+        <button class="tab-btn active" data-range="today">Today</button>
+        <button class="tab-btn" data-range="yesterday">Yesterday</button>
+        <button class="tab-btn" data-range="7days">Last 7 Days</button>
+      </div>
+      <div class="last-sync" id="lastSyncText">Live Updating</div>
+    </div>
+
+    <!-- Summary Stat Cards -->
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-title">Total Screen Time</div>
+        <div class="metric-value primary-highlight" id="totalTimeVal">0h 0m 0s</div>
+        <div class="metric-sub" id="totalTimeSub">Active focus period</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Top Application</div>
+        <div class="metric-value" id="topAppVal">—</div>
+        <div class="metric-sub" id="topAppSub">0% of total time</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Current In-Focus</div>
+        <div class="metric-value current-app-text" id="currentAppVal">—</div>
+        <div class="metric-sub" id="currentAppSub">Tracking active</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Focus Transitions</div>
+        <div class="metric-value" id="sessionCountVal">0</div>
+        <div class="metric-sub">Discrete app sessions</div>
+      </div>
+    </section>
+
+    <!-- Main Content Layout -->
+    <main class="dashboard-grid">
+      <!-- Donut Chart & Legend -->
+      <div class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Usage Distribution</h2>
+          <span class="panel-tag" id="chartTag">By Application</span>
+        </div>
+        <div class="chart-wrapper">
+          <div class="svg-chart-box">
+            <svg id="donutSvg" viewBox="0 0 200 200" class="donut-svg">
+              <circle cx="100" cy="100" r="70" class="donut-bg" />
+              <g id="donutSegments"></g>
+            </svg>
+            <div class="donut-center-label">
+              <span class="center-time" id="donutCenterTime">0h 0m</span>
+              <span class="center-sub">Total</span>
+            </div>
+          </div>
+          <div class="chart-legend" id="chartLegend"></div>
+        </div>
+      </div>
+
+      <!-- Ranked Applications List -->
+      <div class="panel apps-panel">
+        <div class="panel-header">
+          <h2>Application Breakdown</h2>
+          <span class="panel-tag" id="appCountTag">0 Apps</span>
+        </div>
+        <div class="apps-list-scroll" id="appsList">
+          <div class="empty-state">No screen time recorded for this period yet.</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Hourly Timeline Section -->
+    <section class="panel timeline-panel" id="timelineSection">
+      <div class="panel-header">
+        <h2>24-Hour Activity Timeline</h2>
+        <span class="panel-tag">Hourly Breakdown</span>
+      </div>
+      <div class="timeline-bars-container" id="timelineContainer"></div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
