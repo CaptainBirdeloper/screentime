@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Material 3 Expressive - Segmented Tabs & Hero Metric Cards
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Floating Pill Segmented Tabs Bar
+   -------------------------------------------------------------------------- */
+.tabs-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.segmented-pill-tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--md-sys-color-surface-container-lowest);
+  border: 1px solid var(--md-sys-color-outline);
+  padding: 4px;
+  border-radius: var(--radius-full);
+  box-shadow: var(--elevation-surface);
+}
+
+.tab-pill {
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-family-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 7px 18px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.tab-pill:hover {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tab-pill.active {
+  background: var(--color-white);
+  color: #000000;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Hero Metric Cards (Asymmetric 2-Column Banner)
+   -------------------------------------------------------------------------- */
+.metrics-banner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 740px) {
+  .metrics-banner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metric-hero-card {
+  background: var(--md-sys-color-surface-container-low);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--radius-xl);
+  padding: 22px 26px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--elevation-card);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.metric-hero-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+/* Total Time Highlight Glow */
+.metric-hero-card.primary-metric::after {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Top App Vitality Glow */
+.metric-hero-card.secondary-metric::after {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.metric-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.metric-micro-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+}
+
+.primary-metric .metric-micro-dot {
+  background: var(--color-blue-400);
+  box-shadow: 0 0 8px var(--color-blue-400);
+}
+
+.secondary-metric .metric-micro-dot {
+  background: var(--color-green-400);
+  box-shadow: 0 0 8px var(--color-green-400);
+}
+
+.metric-label-text {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--md-sys-color-muted);
+}
+
+.metric-display-num {
+  font-family: var(--font-family-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--color-white);
+  line-height: 1.15;
+  font-feature-settings: "tnum" 1;
+}
+
+.primary-metric .metric-display-num {
+  background: linear-gradient(135deg, #ffffff 40%, var(--color-blue-400) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.secondary-metric .metric-display-num {
+  font-size: 1.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metric-chip-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  background: var(--color-green-container);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: var(--color-green-on-container);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}

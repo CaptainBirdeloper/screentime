@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Base Styles, Resets & Canvas Architecture
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  padding: 24px 16px 40px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Ambient Radial Canvas Lighting */
+body::before {
+  content: "";
+  position: fixed;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(34, 197, 94, 0.03) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1060px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom AMOLED Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--md-sys-color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--md-sys-color-surface-container-highest);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--md-sys-color-muted);
+}
+
+::selection {
+  background: var(--color-blue-500);
+  color: #ffffff;
+}

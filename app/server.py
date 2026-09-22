@@ -109,6 +109,9 @@ class DashboardHandler(BaseHTTPRequestHandler):
         rel_path = path.lstrip("/")
         file_path = (WEB_DIR / rel_path).resolve()
 
+        if file_path.is_dir():
+            file_path = file_path / "index.html"
+
         if not str(file_path).startswith(str(WEB_DIR.resolve())) or not file_path.is_file():
             self.send_error(404, "File not found")
             return
