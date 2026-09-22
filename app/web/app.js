@@ -41,12 +41,9 @@ function assignAppColors(apps) {
 let currentRange = "today";
 let autoRefreshTimer = null;
 
-// DOM Elements
 const totalTimeVal = document.getElementById("totalTimeVal");
 const topAppVal = document.getElementById("topAppVal");
 const topAppSub = document.getElementById("topAppSub");
-const refreshBtn = document.getElementById("refreshBtn");
-const lastSyncText = document.getElementById("lastSyncText");
 const appsList = document.getElementById("appsList");
 const appCountTag = document.getElementById("appCountTag");
 const donutSvg = document.getElementById("donutSvg");
@@ -82,7 +79,6 @@ async function loadMetrics() {
     renderDashboard(data);
   } catch (err) {
     console.error("Failed to load metrics:", err);
-    lastSyncText.textContent = "Sync failed";
   }
 }
 
@@ -111,10 +107,6 @@ function renderDashboard(data) {
 
   // 4. Timeline
   renderTimeline(hourly);
-
-  // 5. Sync timestamp
-  const now = new Date();
-  lastSyncText.textContent = `Updated ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
 }
 
 function renderAppsList(apps, totalSeconds, appColors) {
@@ -243,10 +235,6 @@ tabButtons.forEach(btn => {
     currentRange = btn.getAttribute("data-range");
     loadMetrics();
   });
-});
-
-refreshBtn.addEventListener("click", () => {
-  loadMetrics();
 });
 
 function startAutoRefresh() {

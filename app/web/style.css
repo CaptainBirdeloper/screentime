@@ -35,54 +35,6 @@ body {
   gap: 14px;
 }
 
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  padding: 10px 16px;
-  border-radius: 6px;
-}
-
-.brand h1 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.last-sync {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.btn {
-  background: #27272a;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-}
-
-.btn:hover {
-  background: #3f3f46;
-}
-
-.btn-icon {
-  padding: 5px;
-}
-
 /* Tabs Bar */
 .tabs-bar {
   display: flex;
