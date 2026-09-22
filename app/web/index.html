@@ -8,6 +8,22 @@
 </head>
 <body>
   <div class="app-container">
+    <!-- Header -->
+    <header class="navbar">
+      <div class="brand">
+        <h1>ScreenTime</h1>
+      </div>
+      <div class="header-controls">
+        <button class="btn btn-icon" id="refreshBtn" title="Refresh metrics">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6"></path>
+            <path d="M1 20v-6h6"></path>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
     <!-- Range Selector Tabs -->
     <div class="tabs-bar">
       <div class="tabs">
@@ -15,27 +31,29 @@
         <button class="tab-btn" data-range="yesterday">Yesterday</button>
         <button class="tab-btn" data-range="7days">Last 7 Days</button>
       </div>
+      <div class="last-sync" id="lastSyncText"></div>
     </div>
 
-    <!-- Core Metrics -->
+    <!-- Summary Stat Cards -->
     <section class="metrics-grid">
       <div class="metric-card">
         <div class="metric-title">Total Screen Time</div>
         <div class="metric-value primary-highlight" id="totalTimeVal">0h 0m 0s</div>
       </div>
+
       <div class="metric-card">
         <div class="metric-title">Top Application</div>
         <div class="metric-value" id="topAppVal">—</div>
-        <div class="metric-sub" id="topAppSub">0% of total</div>
+        <div class="metric-sub" id="topAppSub">0% of total time</div>
       </div>
     </section>
 
-    <!-- Main Grid -->
+    <!-- Main Content Layout -->
     <main class="dashboard-grid">
-      <!-- Usage Distribution Chart -->
+      <!-- Donut Chart & Legend -->
       <div class="panel chart-panel">
         <div class="panel-header">
-          <h2>Distribution</h2>
+          <h2>Usage Distribution</h2>
         </div>
         <div class="chart-wrapper">
           <div class="svg-chart-box">
@@ -48,10 +66,10 @@
         </div>
       </div>
 
-      <!-- Application Breakdown List -->
+      <!-- Ranked Applications List -->
       <div class="panel apps-panel">
         <div class="panel-header">
-          <h2>Applications</h2>
+          <h2>Application Breakdown</h2>
           <span class="panel-tag" id="appCountTag">0 Apps</span>
         </div>
         <div class="apps-list-scroll" id="appsList">
@@ -60,10 +78,10 @@
       </div>
     </main>
 
-    <!-- Hourly Timeline -->
+    <!-- Hourly Timeline Section -->
     <section class="panel timeline-panel" id="timelineSection">
       <div class="panel-header">
-        <h2>24-Hour Timeline</h2>
+        <h2>24-Hour Activity Timeline</h2>
       </div>
       <div class="timeline-bars-container" id="timelineContainer"></div>
     </section>
