@@ -1,95 +1,81 @@
 /* ==========================================================================
-   Bento 24-Hour Hourly Spectrum Heatmap Matrix (3-Column Span)
+   24-Hour Precision Waveform Timeline
    ========================================================================== */
 
-.timeline-bento {
-  grid-column: span 3;
-}
-
-@media (max-width: 960px) {
-  .timeline-bento {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 680px) {
-  .timeline-bento {
-    grid-column: span 1;
-  }
-}
-
-.timeline-heat-matrix {
-  display: grid;
-  grid-template-columns: repeat(24, 1fr);
-  gap: 6px;
-  align-items: stretch;
-  height: 90px;
-  margin-top: 8px;
-}
-
-@media (max-width: 768px) {
-  .timeline-heat-matrix {
-    grid-template-columns: repeat(12, 1fr);
-    height: 120px;
-  }
-}
-
-.heat-cell {
+.timeline-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+}
+
+.timeline-chart-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.precision-bars-track {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 90px;
+  width: 100%;
+  border-bottom: 1px solid var(--surface-border);
+  padding-bottom: 2px;
+}
+
+.time-slot-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background: var(--surface-bento-sub);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-tile);
-  padding: 8px 2px;
+  height: 100%;
+  justify-content: flex-end;
   position: relative;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.time-slot-bar-shell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.precision-bar-fill {
+  width: 70%;
+  max-width: 14px;
+  min-height: 2px;
+  background: var(--surface-raised);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
 
-.heat-cell:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-}
-
-.heat-indicator-pillar {
-  width: 8px;
-  height: 42px;
-  border-radius: var(--radius-pill);
-  background: var(--surface-tile);
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-}
-
-.heat-pillar-fill {
-  width: 100%;
-  border-radius: var(--radius-pill);
-  transition: height 0.4s ease;
-}
-
-/* Intensity Coloring: Blue (Moderate), Green (Light), Red (Heavy Peak) */
-.heat-fill-low {
-  background: var(--green-primary);
-  box-shadow: 0 0 8px var(--green-glow);
-}
-
-.heat-fill-med {
-  background: var(--blue-primary);
+.precision-bar-fill.has-time {
+  background: linear-gradient(180deg, var(--blue) 0%, #1d4ed8 100%);
   box-shadow: 0 0 10px var(--blue-glow);
 }
 
-.heat-fill-high {
-  background: var(--red-primary);
-  box-shadow: 0 0 12px var(--red-glow);
+.precision-bar-fill:hover {
+  background: #ffffff;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.6);
+  transform: scaleY(1.05);
 }
 
-.heat-hour-label {
+/* Time Axis Markers */
+.time-ticks-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.time-tick-item {
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-muted);
+  font-size: 10.5px;
   font-weight: 600;
-  user-select: none;
+  color: var(--text-300);
+  letter-spacing: -0.02em;
 }

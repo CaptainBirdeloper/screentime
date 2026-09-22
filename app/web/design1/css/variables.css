@@ -1,45 +1,45 @@
 /* ==========================================================================
-   AMOLED M3 Expressive Bento Tokens
-   Primary: Black (#000000), Blue (#2563eb / #38bdf8), Green (#16a34a / #4ade80),
-   Red (#dc2626 / #f87171), White (#ffffff)
+   AMOLED Design Tokens - Pure Void & Precision Accents
+   Palette: Void Black (#000000), Pure White (#ffffff),
+   Electric Blue (#38bdf8), Emerald (#10b981), Crimson (#f43f5e)
    ========================================================================== */
 
 :root {
-  --bg-amoled: #000000;
-  --surface-bento: #0a0a0e;
-  --surface-bento-sub: #121218;
-  --surface-tile: #181820;
-  --surface-tile-hover: #22222c;
-  
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-active: rgba(56, 189, 248, 0.4);
+  --bg: #000000;
+  --surface: #090a0f;
+  --surface-hover: #11131a;
+  --surface-raised: #151821;
+  --surface-border: rgba(255, 255, 255, 0.07);
+  --surface-border-hover: rgba(255, 255, 255, 0.16);
 
-  /* Primary Blue */
-  --blue-primary: #38bdf8;
-  --blue-deep: #1d4ed8;
-  --blue-glow: rgba(56, 189, 248, 0.2);
+  --text-100: #ffffff;
+  --text-200: #cbd5e1;
+  --text-300: #64748b;
+  --text-400: #334155;
 
-  /* Vitality Green */
-  --green-primary: #4ade80;
-  --green-deep: #15803d;
-  --green-glow: rgba(74, 222, 128, 0.2);
+  /* Intentional Color Accents */
+  --blue: #38bdf8;
+  --blue-glow: rgba(56, 189, 248, 0.25);
+  --blue-surface: rgba(56, 189, 248, 0.1);
 
-  /* Alert Red */
-  --red-primary: #f87171;
-  --red-deep: #b91c1c;
-  --red-glow: rgba(248, 113, 113, 0.2);
+  --green: #10b981;
+  --green-glow: rgba(16, 185, 129, 0.25);
+  --green-surface: rgba(16, 185, 129, 0.1);
 
-  /* Specular White & Greys */
-  --text-pure: #ffffff;
-  --text-dim: #94a3b8;
-  --text-muted: #52525b;
+  --red: #f43f5e;
+  --red-glow: rgba(244, 63, 94, 0.25);
+  --red-surface: rgba(244, 63, 94, 0.1);
 
-  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-  --font-mono: "SF Mono", "Consolas", monospace;
+  --purple: #a855f7;
+  --amber: #f59e0b;
 
-  --radius-bento: 24px;
-  --radius-tile: 14px;
-  --radius-pill: 9999px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", "Consolas", monospace;
 
-  --shadow-bento: 0 16px 40px -10px rgba(0, 0, 0, 0.95);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --shadow-ambient: 0 20px 40px -15px rgba(0, 0, 0, 0.9);
 }

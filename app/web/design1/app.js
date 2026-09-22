@@ -1,18 +1,17 @@
 /**
- * ScreenTime AMOLED Bento Dashboard Client (design1)
- * High-Contrast Palette: Blue, Green, Red, White, Cyan
+ * ScreenTime Precision AMOLED Client (design1)
  */
 
 const PALETTE = [
-  "#38bdf8", // Electric Blue / Cyan
-  "#4ade80", // Vitality Green
-  "#f87171", // Alert Red
-  "#a78bfa", // Soft Purple
-  "#fbbf24", // Warm Amber
+  "#38bdf8", // Electric Blue
+  "#10b981", // Emerald Green
+  "#f43f5e", // Crimson Red
+  "#a855f7", // Purple
+  "#f59e0b", // Warm Amber
   "#60a5fa", // Cornflower Blue
   "#2dd4bf", // Teal
-  "#f43f5e", // Rose
-  "#e2e8f0"  // Specular White
+  "#ec4899", // Fuchsia
+  "#ffffff"  // Pure White
 ];
 
 function assignAppColors(apps) {
@@ -41,12 +40,12 @@ let autoRefreshTimer = null;
 const totalTimeVal = document.getElementById("totalTimeVal");
 const topAppVal = document.getElementById("topAppVal");
 const topAppSub = document.getElementById("topAppSub");
-const horizonMeter = document.getElementById("horizonMeter");
-const chartLegend = document.getElementById("chartLegend");
 const appsList = document.getElementById("appsList");
 const appCountTag = document.getElementById("appCountTag");
+const donutSegments = document.getElementById("donutSegments");
+const chartLegend = document.getElementById("chartLegend");
 const timelineContainer = document.getElementById("timelineContainer");
-const tabButtons = document.querySelectorAll(".pill-btn");
+const tabButtons = document.querySelectorAll(".range-btn");
 
 function formatDuration(totalSeconds) {
   const sec = Math.max(0, Math.floor(totalSeconds));
@@ -81,148 +80,137 @@ async function loadMetrics() {
 function renderDashboard(data) {
   const { total_seconds, apps, hourly } = data;
 
-  // 1. Hero Big Timer
+  // 1. Hero Metrics
   totalTimeVal.textContent = formatDuration(total_seconds);
 
-  // 2. Hero Top App Strip
   if (apps && apps.length > 0) {
     const top = apps[0];
     topAppVal.textContent = top.app_name;
     topAppSub.textContent = `${formatDuration(top.total_seconds)} • ${top.percentage}%`;
   } else {
     topAppVal.textContent = "—";
-    topAppSub.textContent = "0%";
+    topAppSub.textContent = "0% of total";
   }
 
   const appColors = assignAppColors(apps);
 
-  // 3. Stacked Horizon Meter & Legend
-  renderHorizonMeter(apps, total_seconds, appColors);
+  // 2. Apps Leaderboard
+  renderAppsList(apps, total_seconds, appColors);
 
-  // 4. App Tile Grid
-  renderAppTiles(apps, total_seconds, appColors);
+  // 3. Donut Gauge
+  renderDonutChart(apps, total_seconds, appColors);
 
-  // 5. 24-Hour Spectrum Heatmap
-  renderHeatMatrix(hourly);
+  // 4. Waveform Timeline
+  renderWaveformTimeline(hourly);
 }
 
-/**
- * Render Horizontal Stacked Proportional Meter & Legend
- */
-function renderHorizonMeter(apps, totalSeconds, appColors) {
-  horizonMeter.innerHTML = "";
-  chartLegend.innerHTML = "";
+function renderAppsList(apps, totalSeconds, appColors) {
+  appCountTag.textContent = `${apps ? apps.length : 0} Apps`;
+  appsList.innerHTML = "";
 
-  if (!apps || apps.length === 0 || totalSeconds <= 0) {
-    horizonMeter.innerHTML = '<div class="meter-segment" style="width: 100%; background: #181820"></div>';
-    chartLegend.innerHTML = '<div style="font-size:12px; color:#52525b; padding:8px 0;">No active distribution</div>';
+  if (!apps || apps.length === 0) {
+    appsList.innerHTML = '<div class="empty-state">No screen time logged for this period.</div>';
     return;
   }
 
   apps.forEach((app, idx) => {
     const color = appColors?.get(app.app_name) || PALETTE[idx % PALETTE.length];
+    const rankStr = (idx + 1).toString().padStart(2, "0");
 
-    // Meter Segment
-    const seg = document.createElement("div");
-    seg.className = "meter-segment";
-    seg.style.width = `${Math.max(1, app.percentage)}%`;
-    seg.style.backgroundColor = color;
-    seg.title = `${app.app_name}: ${app.percentage}%`;
-    horizonMeter.appendChild(seg);
-
-    // Legend item (Top 5 apps)
-    if (idx < 5) {
-      const leg = document.createElement("div");
-      leg.className = "meter-legend-item";
-      leg.innerHTML = `
-        <div class="meter-legend-left">
-          <span class="meter-color-pip" style="background-color: ${color}"></span>
-          <span class="meter-legend-name" title="${escapeHtml(app.app_name)}">${escapeHtml(app.app_name)}</span>
+    const row = document.createElement("div");
+    row.className = "app-stream-row";
+    row.innerHTML = `
+      <div class="app-stream-meta">
+        <div class="app-meta-left">
+          <span class="rank-index">${rankStr}</span>
+          <div class="app-text-group">
+            <span class="app-name-title">${escapeHtml(app.app_name)}</span>
+            <span class="app-exe-badge">${escapeHtml(app.exe_name || "")}</span>
+          </div>
         </div>
-        <span class="meter-legend-pct">${app.percentage}%</span>
+        <div class="app-meta-right">
+          <span class="app-time-stat">${formatDuration(app.total_seconds)}</span>
+          <span class="app-share-chip">${app.percentage}%</span>
+        </div>
+      </div>
+      <div class="stream-progress-track">
+        <div class="stream-progress-fill" style="width: ${Math.min(100, Math.max(1, app.percentage))}%; background-color: ${color}"></div>
+      </div>
+    `;
+    appsList.appendChild(row);
+  });
+}
+
+function renderDonutChart(apps, totalSeconds, appColors) {
+  donutSegments.innerHTML = "";
+  chartLegend.innerHTML = "";
+
+  if (!apps || apps.length === 0 || totalSeconds <= 0) {
+    return;
+  }
+
+  const radius = 70;
+  const circumference = 2 * Math.PI * radius;
+  let accumulatedPercent = 0;
+
+  apps.forEach((app, idx) => {
+    const color = appColors?.get(app.app_name) || PALETTE[idx % PALETTE.length];
+    const pct = app.percentage / 100;
+    const strokeDash = pct * circumference;
+    const strokeOffset = -(accumulatedPercent * circumference);
+
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", "100");
+    circle.setAttribute("cy", "100");
+    circle.setAttribute("r", radius.toString());
+    circle.setAttribute("class", "gauge-arc");
+    circle.setAttribute("stroke", color);
+    circle.setAttribute("stroke-dasharray", `${strokeDash} ${circumference}`);
+    circle.setAttribute("stroke-dashoffset", strokeOffset.toString());
+    donutSegments.appendChild(circle);
+
+    accumulatedPercent += pct;
+
+    if (idx < 7) {
+      const leg = document.createElement("div");
+      leg.className = "legend-item-row";
+      leg.innerHTML = `
+        <div class="legend-item-left">
+          <span class="legend-dot" style="background-color: ${color}"></span>
+          <span class="legend-label" title="${escapeHtml(app.app_name)}">${escapeHtml(app.app_name)}</span>
+        </div>
+        <span class="legend-value">${app.percentage}%</span>
       `;
       chartLegend.appendChild(leg);
     }
   });
 }
 
-/**
- * Render Interactive App Tiles Grid
- */
-function renderAppTiles(apps, totalSeconds, appColors) {
-  appCountTag.textContent = `${apps ? apps.length : 0} Apps Active`;
-  appsList.innerHTML = "";
-
-  if (!apps || apps.length === 0) {
-    appsList.innerHTML = '<div class="empty-tile-notice">No screen time recorded for this time window.</div>';
-    return;
-  }
-
-  apps.forEach((app, idx) => {
-    const color = appColors?.get(app.app_name) || PALETTE[idx % PALETTE.length];
-
-    const tile = document.createElement("div");
-    tile.className = "app-bento-tile";
-    tile.innerHTML = `
-      <div class="tile-top-row">
-        <div class="tile-meta-group">
-          <span class="tile-color-pill" style="background-color: ${color}"></span>
-          <div class="tile-titles">
-            <span class="tile-app-name">${escapeHtml(app.app_name)}</span>
-            <span class="tile-app-exe">${escapeHtml(app.exe_name || "")}</span>
-          </div>
-        </div>
-        <span class="tile-pct-badge">${app.percentage}%</span>
-      </div>
-      <div class="tile-bottom-row">
-        <span class="tile-duration-text">${formatDuration(app.total_seconds)}</span>
-      </div>
-      <div class="tile-progress-track">
-        <div class="tile-progress-bar" style="width: ${Math.min(100, Math.max(1, app.percentage))}%; background-color: ${color}"></div>
-      </div>
-    `;
-    appsList.appendChild(tile);
-  });
-}
-
-/**
- * Render 24-Hour Spectrum Heatmap Matrix
- */
-function renderHeatMatrix(hourly) {
+function renderWaveformTimeline(hourly) {
   timelineContainer.innerHTML = "";
   if (!hourly || hourly.length === 0) {
     document.getElementById("timelineSection").style.display = "none";
     return;
   }
-  document.getElementById("timelineSection").style.display = "block";
+  document.getElementById("timelineSection").style.display = "flex";
 
   const maxSeconds = Math.max(...hourly.map(h => h.seconds), 60);
 
   hourly.forEach(item => {
-    const cell = document.createElement("div");
-    cell.className = "heat-cell";
+    const col = document.createElement("div");
+    col.className = "time-slot-column";
 
-    const ratio = item.seconds / maxSeconds;
-    const pct = Math.min(100, Math.round(ratio * 100));
+    const pct = Math.min(100, Math.round((item.seconds / maxSeconds) * 100));
     const hStr = item.hour.toString().padStart(2, "0");
     const durStr = formatShortDuration(item.seconds);
+    const hasTime = item.seconds > 0;
 
-    // Color intensity class
-    let intensityClass = "";
-    if (item.seconds > 0) {
-      if (ratio > 0.6) intensityClass = "heat-fill-high";
-      else if (ratio > 0.25) intensityClass = "heat-fill-med";
-      else intensityClass = "heat-fill-low";
-    }
-
-    cell.title = `${hStr}:00 - ${durStr} active`;
-    cell.innerHTML = `
-      <div class="heat-indicator-pillar">
-        <div class="heat-pillar-fill ${intensityClass}" style="height: ${item.seconds > 0 ? Math.max(15, pct) : 0}%"></div>
+    col.innerHTML = `
+      <div class="time-slot-bar-shell">
+        <div class="precision-bar-fill ${hasTime ? 'has-time' : ''}" style="height: ${hasTime ? Math.max(8, pct) : 3}%" title="${hStr}:00 - ${durStr} active"></div>
       </div>
-      <span class="heat-hour-label">${hStr}</span>
     `;
-    timelineContainer.appendChild(cell);
+    timelineContainer.appendChild(col);
   });
 }
 

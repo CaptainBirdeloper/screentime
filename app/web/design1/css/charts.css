@@ -1,132 +1,217 @@
 /* ==========================================================================
-   Bento Application Grid: Tactile Modular Cards (3-Column Span)
+   Distribution & Application Leaderboard
    ========================================================================== */
 
-.apps-grid-bento {
-  grid-column: span 3;
-}
-
-@media (max-width: 960px) {
-  .apps-grid-bento {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 680px) {
-  .apps-grid-bento {
-    grid-column: span 1;
-  }
-}
-
-.apps-tiles-container {
+.split-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
-  max-height: 420px;
-  overflow-y: auto;
-  padding-right: 4px;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
 }
 
-.app-bento-tile {
-  background: var(--surface-bento-sub);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-tile);
-  padding: 14px 16px;
+@media (max-width: 840px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Donut Gauge Panel */
+.gauge-column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+  gap: 16px;
+}
+
+.gauge-svg-box {
+  width: 160px;
+  height: 160px;
   position: relative;
 }
 
-.app-bento-tile:hover {
-  background: var(--surface-tile-hover);
-  border-color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px);
+.gauge-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
 }
 
-.tile-top-row {
+.gauge-track {
+  fill: none;
+  stroke: var(--surface-raised);
+  stroke-width: 18;
+}
+
+.gauge-arc {
+  fill: none;
+  stroke-width: 18;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.4s ease;
+}
+
+/* Micro Legend */
+.legend-stream {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legend-item-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
 }
 
-.tile-meta-group {
+.legend-item-row:hover {
+  background: var(--surface-hover);
+}
+
+.legend-item-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.legend-label {
+  color: var(--text-200);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.legend-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-100);
+}
+
+/* --------------------------------------------------------------------------
+   Ranked App Leaderboard Stream
+   -------------------------------------------------------------------------- */
+.apps-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.app-stream-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--surface-hover);
+  border: 1px solid var(--surface-border);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  transition: all 0.18s ease;
+}
+
+.app-stream-row:hover {
+  background: var(--surface-raised);
+  border-color: var(--surface-border-hover);
+  transform: translateX(2px);
+}
+
+.app-stream-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-meta-left {
   display: flex;
   align-items: center;
   gap: 10px;
   overflow: hidden;
 }
 
-.tile-color-pill {
-  width: 4px;
-  height: 28px;
-  border-radius: var(--radius-pill);
+.rank-index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-300);
+  width: 18px;
   flex-shrink: 0;
 }
 
-.tile-titles {
+.app-text-group {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.tile-app-name {
+.app-name-title {
   font-size: 13.5px;
   font-weight: 700;
-  color: var(--text-pure);
+  color: var(--text-100);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.tile-app-exe {
-  font-size: 11px;
-  color: var(--text-muted);
+.app-exe-badge {
   font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-300);
 }
 
-.tile-pct-badge {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: var(--radius-pill);
-  background: var(--surface-tile);
-  color: var(--text-pure);
-}
-
-.tile-bottom-row {
+.app-meta-right {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
-.tile-duration-text {
+.app-time-stat {
+  font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 700;
-  color: var(--text-pure);
-  font-feature-settings: "tnum" 1;
+  color: var(--text-100);
 }
 
-.tile-progress-track {
-  width: 100%;
-  height: 4px;
-  background: var(--surface-tile);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
-  margin-top: 2px;
-}
-
-.tile-progress-bar {
-  height: 100%;
-  border-radius: var(--radius-pill);
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.empty-tile-notice {
-  grid-column: 1 / -1;
+.app-share-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  background: var(--blue-surface);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  min-width: 40px;
   text-align: center;
-  color: var(--text-muted);
-  padding: 40px;
+}
+
+.stream-progress-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.stream-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-300);
+  padding: 40px 0;
   font-size: 13px;
 }
