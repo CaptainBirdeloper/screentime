@@ -181,10 +181,17 @@ class DashboardServer:
         return self.port
 
     def stop(self) -> None:
-        """Shutdown the dashboard server."""
+        """Shutdown the dashboard server safely."""
         with self._lock:
             if self.server:
-                self.server.shutdown()
-                self.server.server_close()
+                srv = self.server
                 self.server = None
                 self.thread = None
+                try:
+                    srv.server_close()
+                except Exception:
+                    pass
+                try:
+                    srv.shutdown()
+                except Exception:
+                    pass

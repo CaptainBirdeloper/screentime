@@ -117,11 +117,27 @@ class TrayRunner:
         self.icon.title = f"ScreenTime: {hours}h {minutes}m ({status})"
 
     def on_quit(self, icon=None, item=None) -> None:
-        """Clean shutdown: flush database, stop server, and remove tray icon."""
-        self.tracker.stop()
-        self.server.stop()
+        """Clean shutdown: remove tray icon immediately, flush data, and terminate."""
         if self.icon:
-            self.icon.stop()
+            try:
+                self.icon.visible = False
+                self.icon.stop()
+            except Exception:
+                pass
+
+        def _cleanup():
+            try:
+                self.tracker.stop()
+            except Exception:
+                pass
+            try:
+                self.server.stop()
+            except Exception:
+                pass
+            os._exit(0)
+
+        # Flush data and exit process without blocking the Windows tray message pump
+        threading.Thread(target=_cleanup, daemon=True).start()
 
     def _create_menu(self) -> pystray.Menu:
         """Build the system tray context menu."""
