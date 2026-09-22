@@ -1,5 +1,5 @@
 /**
- * ScreenTime Dashboard - Barebones, High-Performance Offline Client
+ * ScreenTime Dashboard - Minimal Barebones Client
  */
 
 const PALETTE = [
@@ -45,38 +45,24 @@ let autoRefreshTimer = null;
 const totalTimeVal = document.getElementById("totalTimeVal");
 const topAppVal = document.getElementById("topAppVal");
 const topAppSub = document.getElementById("topAppSub");
-const currentAppVal = document.getElementById("currentAppVal");
-const sessionCountVal = document.getElementById("sessionCountVal");
-const statusIndicator = document.getElementById("statusIndicator");
-const statusLabel = document.getElementById("statusLabel");
-const togglePauseBtn = document.getElementById("togglePauseBtn");
-const pauseBtnText = document.getElementById("pauseBtnText");
 const refreshBtn = document.getElementById("refreshBtn");
 const lastSyncText = document.getElementById("lastSyncText");
 const appsList = document.getElementById("appsList");
 const appCountTag = document.getElementById("appCountTag");
 const donutSvg = document.getElementById("donutSvg");
 const donutSegments = document.getElementById("donutSegments");
-const donutCenterTime = document.getElementById("donutCenterTime");
 const chartLegend = document.getElementById("chartLegend");
 const timelineContainer = document.getElementById("timelineContainer");
 const tabButtons = document.querySelectorAll(".tab-btn");
 
-/**
- * Format seconds into a readable string: Xh Ym Zs
- */
 function formatDuration(totalSeconds) {
   const sec = Math.max(0, Math.floor(totalSeconds));
   const h = Math.floor(sec / 3600);
   const m = Math.floor((sec % 3600) / 60);
   const s = sec % 60;
 
-  if (h > 0) {
-    return `${h}h ${m}m ${s}s`;
-  }
-  if (m > 0) {
-    return `${m}m ${s}s`;
-  }
+  if (h > 0) return `${h}h ${m}m ${s}s`;
+  if (m > 0) return `${m}m ${s}s`;
   return `${s}s`;
 }
 
@@ -88,9 +74,6 @@ function formatShortDuration(totalSeconds) {
   return `${m}m`;
 }
 
-/**
- * Fetch and render metrics
- */
 async function loadMetrics() {
   try {
     const res = await fetch(`/api/stats?range=${encodeURIComponent(currentRange)}`);
@@ -99,32 +82,15 @@ async function loadMetrics() {
     renderDashboard(data);
   } catch (err) {
     console.error("Failed to load metrics:", err);
-    lastSyncText.textContent = "Sync failed (re-trying...)";
+    lastSyncText.textContent = "Sync failed";
   }
 }
 
-/**
- * Render all dashboard sections
- */
 function renderDashboard(data) {
-  const { total_seconds, apps, hourly, status, recent_sessions } = data;
+  const { total_seconds, apps, hourly } = data;
 
-  // 1. Live status & pause toggle
-  const isPaused = status?.paused ?? false;
-  if (isPaused) {
-    statusIndicator.classList.add("paused");
-    statusLabel.textContent = "Paused";
-    pauseBtnText.textContent = "Resume";
-  } else {
-    statusIndicator.classList.remove("paused");
-    statusLabel.textContent = status?.is_idle ? "Idle" : "Tracking";
-    pauseBtnText.textContent = "Pause";
-  }
-
-  // 2. Summary stats cards
+  // 1. Core metrics
   totalTimeVal.textContent = formatDuration(total_seconds);
-  currentAppVal.textContent = status?.current_app || "None";
-  sessionCountVal.textContent = recent_sessions ? recent_sessions.length : (apps.length || 0);
 
   if (apps && apps.length > 0) {
     const top = apps[0];
@@ -132,28 +98,25 @@ function renderDashboard(data) {
     topAppSub.textContent = `${formatDuration(top.total_seconds)} (${top.percentage}%)`;
   } else {
     topAppVal.textContent = "—";
-    topAppSub.textContent = "0% of total time";
+    topAppSub.textContent = "0% of total";
   }
 
   const appColors = assignAppColors(apps);
 
-  // 3. Ranked Apps List
+  // 2. Apps List
   renderAppsList(apps, total_seconds, appColors);
 
-  // 4. Donut Chart
+  // 3. Donut Chart
   renderDonutChart(apps, total_seconds, appColors);
 
-  // 5. Timeline Breakdown
+  // 4. Timeline
   renderTimeline(hourly);
 
-  // 6. Update sync timestamp
+  // 5. Sync timestamp
   const now = new Date();
-  lastSyncText.textContent = `Updated ${now.toLocaleTimeString()}`;
+  lastSyncText.textContent = `Updated ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
 }
 
-/**
- * Render Ranked Applications Breakdown
- */
 function renderAppsList(apps, totalSeconds, appColors) {
   appCountTag.textContent = `${apps ? apps.length : 0} Apps`;
   appsList.innerHTML = "";
@@ -165,14 +128,13 @@ function renderAppsList(apps, totalSeconds, appColors) {
 
   apps.forEach((app, idx) => {
     const color = appColors?.get(app.app_name) || PALETTE[idx % PALETTE.length];
-    const initial = (app.app_name || "A").trim().charAt(0).toUpperCase();
 
     const row = document.createElement("div");
     row.className = "app-row";
     row.innerHTML = `
       <div class="app-info-line">
         <div class="app-meta">
-          <div class="app-avatar" style="background-color: ${color}">${initial}</div>
+          <span class="app-color-bar" style="background-color: ${color}"></span>
           <div class="app-titles">
             <span class="app-title-name">${escapeHtml(app.app_name)}</span>
             <span class="app-title-exe">${escapeHtml(app.exe_name || "")}</span>
@@ -191,13 +153,9 @@ function renderAppsList(apps, totalSeconds, appColors) {
   });
 }
 
-/**
- * Render SVG Donut Chart
- */
 function renderDonutChart(apps, totalSeconds, appColors) {
   donutSegments.innerHTML = "";
   chartLegend.innerHTML = "";
-  donutCenterTime.textContent = formatShortDuration(totalSeconds);
 
   if (!apps || apps.length === 0 || totalSeconds <= 0) {
     return;
@@ -213,7 +171,6 @@ function renderDonutChart(apps, totalSeconds, appColors) {
     const strokeDash = pct * circumference;
     const strokeOffset = -(accumulatedPercent * circumference);
 
-    // SVG Circle Segment
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("cx", "100");
     circle.setAttribute("cy", "100");
@@ -226,8 +183,7 @@ function renderDonutChart(apps, totalSeconds, appColors) {
 
     accumulatedPercent += pct;
 
-    // Legend item (show top 7 apps in legend)
-    if (idx < 7) {
+    if (idx < 8) {
       const leg = document.createElement("div");
       leg.className = "legend-item";
       leg.innerHTML = `
@@ -242,9 +198,6 @@ function renderDonutChart(apps, totalSeconds, appColors) {
   });
 }
 
-/**
- * Render 24-Hour Timeline
- */
 function renderTimeline(hourly) {
   timelineContainer.innerHTML = "";
   if (!hourly || hourly.length === 0) {
@@ -265,7 +218,7 @@ function renderTimeline(hourly) {
 
     col.innerHTML = `
       <div class="timeline-bar-wrapper">
-        <div class="timeline-bar" style="height: ${Math.max(4, pct)}%" title="${hStr}:00 - ${durStr}"></div>
+        <div class="timeline-bar" style="height: ${Math.max(2, pct)}%" title="${hStr}:00 - ${durStr}"></div>
       </div>
       <span class="timeline-label">${item.hour % 3 === 0 ? hStr : ""}</span>
     `;
@@ -283,7 +236,6 @@ function escapeHtml(str) {
   })[m]);
 }
 
-// Event Listeners
 tabButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     tabButtons.forEach(b => b.classList.remove("active"));
@@ -293,27 +245,14 @@ tabButtons.forEach(btn => {
   });
 });
 
-togglePauseBtn.addEventListener("click", async () => {
-  try {
-    const res = await fetch("/api/toggle-pause", { method: "POST" });
-    if (res.ok) {
-      loadMetrics();
-    }
-  } catch (err) {
-    console.error("Failed to toggle pause:", err);
-  }
-});
-
 refreshBtn.addEventListener("click", () => {
   loadMetrics();
 });
 
-// Auto-refresh every 10 seconds while dashboard is open
 function startAutoRefresh() {
   if (autoRefreshTimer) clearInterval(autoRefreshTimer);
   autoRefreshTimer = setInterval(loadMetrics, 10000);
 }
 
-// Initial load
 loadMetrics();
 startAutoRefresh();
