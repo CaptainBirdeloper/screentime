@@ -84,6 +84,18 @@ class Database:
             )
             conn.commit()
 
+    def cleanup_ignored_apps(self, ignored_exes) -> None:
+        """Purge records belonging to ignored/system executables."""
+        if not ignored_exes:
+            return
+        placeholders = ",".join("?" for _ in ignored_exes)
+        conn = self._get_connection()
+        with conn:
+            conn.execute(
+                f"DELETE FROM sessions WHERE LOWER(exe_name) IN ({placeholders});",
+                tuple(e.lower() for e in ignored_exes),
+            )
+
     def record_session(
         self,
         app_name: str,

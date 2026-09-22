@@ -65,6 +65,21 @@ KNOWN_APP_NAMES: Dict[str, str] = {
     "taskmgr.exe": "Task Manager",
 }
 
+# Process names to ignore (self-monitoring and transient OS dialogs)
+IGNORED_EXES = {
+    "python.exe",
+    "pythonw.exe",
+    "credentialuibroker.exe",
+    "shellexperiencehost.exe",
+    "searchhost.exe",
+    "searchapp.exe",
+    "lockapp.exe",
+    "startmenuexperiencehost.exe",
+    "taskhostw.exe",
+    "textinputhost.exe",
+    "system",
+}
+
 
 class ScreenTimeTracker:
     """Core tracking engine monitoring foreground window focus and idle state."""
@@ -75,6 +90,9 @@ class ScreenTimeTracker:
         self._paused = False
         self._lock = threading.Lock()
         self._thread: Optional[threading.Thread] = None
+
+        # Clean existing ignored apps from database
+        self.db.cleanup_ignored_apps(IGNORED_EXES)
 
         # PID to (exe_name, app_name) cache
         self._pid_cache: Dict[int, Tuple[str, str]] = {}
@@ -165,6 +183,8 @@ class ScreenTimeTracker:
             return None
 
         exe_name, app_name = self._resolve_process_name(pid.value)
+        if exe_name in IGNORED_EXES:
+            return None
 
         # Window Title
         length = user32.GetWindowTextLengthW(hwnd)

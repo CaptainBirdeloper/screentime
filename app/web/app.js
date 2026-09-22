@@ -3,10 +3,40 @@
  */
 
 const PALETTE = [
-  "#38bdf8", "#34d399", "#818cf8", "#f59e0b", 
-  "#f43f5e", "#c084fc", "#2dd4bf", "#fb7185",
-  "#a3e635", "#e879f9", "#94a3b8"
+  "#38bdf8", // Sky Blue
+  "#34d399", // Emerald Green
+  "#a78bfa", // Soft Purple
+  "#fbbf24", // Warm Amber
+  "#fb7185", // Coral Rose
+  "#2dd4bf", // Teal
+  "#818cf8", // Indigo
+  "#f472b6", // Pink
+  "#f97316", // Orange
+  "#4ade80", // Light Green
+  "#60a5fa", // Cornflower Blue
+  "#c084fc", // Violet
+  "#e879f9", // Fuchsia
+  "#94a3b8"  // Slate
 ];
+
+function assignAppColors(apps) {
+  const colorMap = new Map();
+  const used = new Set();
+  (apps || []).forEach((app, idx) => {
+    let colorIdx = idx % PALETTE.length;
+    if (used.has(colorIdx) && used.size < PALETTE.length) {
+      for (let i = 0; i < PALETTE.length; i++) {
+        if (!used.has(i)) {
+          colorIdx = i;
+          break;
+        }
+      }
+    }
+    used.add(colorIdx);
+    colorMap.set(app.app_name, PALETTE[colorIdx]);
+  });
+  return colorMap;
+}
 
 let currentRange = "today";
 let autoRefreshTimer = null;
@@ -105,11 +135,13 @@ function renderDashboard(data) {
     topAppSub.textContent = "0% of total time";
   }
 
+  const appColors = assignAppColors(apps);
+
   // 3. Ranked Apps List
-  renderAppsList(apps, total_seconds);
+  renderAppsList(apps, total_seconds, appColors);
 
   // 4. Donut Chart
-  renderDonutChart(apps, total_seconds);
+  renderDonutChart(apps, total_seconds, appColors);
 
   // 5. Timeline Breakdown
   renderTimeline(hourly);
@@ -122,7 +154,7 @@ function renderDashboard(data) {
 /**
  * Render Ranked Applications Breakdown
  */
-function renderAppsList(apps, totalSeconds) {
+function renderAppsList(apps, totalSeconds, appColors) {
   appCountTag.textContent = `${apps ? apps.length : 0} Apps`;
   appsList.innerHTML = "";
 
@@ -132,7 +164,7 @@ function renderAppsList(apps, totalSeconds) {
   }
 
   apps.forEach((app, idx) => {
-    const color = PALETTE[idx % PALETTE.length];
+    const color = appColors?.get(app.app_name) || PALETTE[idx % PALETTE.length];
     const initial = (app.app_name || "A").trim().charAt(0).toUpperCase();
 
     const row = document.createElement("div");
@@ -162,7 +194,7 @@ function renderAppsList(apps, totalSeconds) {
 /**
  * Render SVG Donut Chart
  */
-function renderDonutChart(apps, totalSeconds) {
+function renderDonutChart(apps, totalSeconds, appColors) {
   donutSegments.innerHTML = "";
   chartLegend.innerHTML = "";
   donutCenterTime.textContent = formatShortDuration(totalSeconds);
@@ -176,7 +208,7 @@ function renderDonutChart(apps, totalSeconds) {
   let accumulatedPercent = 0;
 
   apps.forEach((app, idx) => {
-    const color = PALETTE[idx % PALETTE.length];
+    const color = appColors?.get(app.app_name) || PALETTE[idx % PALETTE.length];
     const pct = app.percentage / 100;
     const strokeDash = pct * circumference;
     const strokeOffset = -(accumulatedPercent * circumference);
